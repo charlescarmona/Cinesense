@@ -1,0 +1,53 @@
+CINESENSE — CENTRAL EVALUATION DATABASE SETUP
+
+WHY THIS IS NEEDED
+The old version stored choices only in each visitor's browser. This version sends every respondent's choice to one central Supabase table so the research team can export the complete dataset.
+
+A. CREATE THE DATABASE
+1. Create/sign in to a Supabase account and create a project.
+2. In the project, open SQL Editor.
+3. Open supabase_setup.sql from this CineSense folder.
+4. Copy the entire SQL file into the SQL Editor and Run it once.
+5. This creates public.evaluation_responses with Row Level Security.
+   Visitors can INSERT responses, but the website cannot SELECT/edit/delete the full dataset.
+
+B. CONNECT CINESENSE
+1. In Supabase, open the project's Connect dialog (or Settings -> API Keys).
+2. Copy the Project URL.
+3. Copy the PUBLISHABLE key (starts with sb_publishable_ on newer projects).
+4. Open config.js.
+5. Replace PASTE_YOUR_SUPABASE_PROJECT_URL_HERE with the Project URL.
+6. Replace PASTE_YOUR_SUPABASE_PUBLISHABLE_KEY_HERE with the publishable key.
+7. NEVER put a secret key or service-role key in config.js or GitHub.
+
+C. UPDATE GITHUB / RENDER
+Upload/replace these files in the same GitHub repository:
+- dashboard.html
+- config.js
+- supabase_setup.sql (okay to keep for research/reproducibility)
+- evaluate_models.py
+- the rest of the existing CineSense website files
+
+Commit the changes. Render should redeploy automatically if connected to GitHub.
+
+D. TEST BEFORE COLLECTING RESPONSES
+1. Open the Render site.
+2. Register/set preferences.
+3. Open a movie and click Choose to Watch.
+4. In Supabase -> Table Editor -> evaluation_responses, confirm one new row appears.
+5. Test from a second browser/device and confirm its row appears in the SAME table.
+
+E. WHERE TO SEE ALL RESPONSES
+Supabase Dashboard -> Table Editor -> evaluation_responses.
+This is the central dataset from all devices.
+
+F. WHEN DATA COLLECTION IS FINISHED
+Export the evaluation_responses table as CSV from Supabase and save it as:
+    evaluation_responses.csv
+Place that CSV beside evaluate_models.py, then run:
+    python evaluate_models.py
+
+The evaluator accepts the Supabase lowercase column names and groups the train/test split by Participant_ID when available.
+
+IMPORTANT
+Do not collect final research responses until the two-device test in Step D succeeds.
