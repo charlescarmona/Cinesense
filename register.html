@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Register | CineSense</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <nav class="cs-nav">
+    <a href="index.html" class="cs-brand">CineSense</a>
+  </nav>
+
+  <div class="form-panel">
+    <h2>Create your Account</h2>
+    <form onsubmit="handleRegistration(event)">
+      <div class="form-grid">
+        <div class="form-col">
+          <div class="cs-field">
+            <label>Email Address</label>
+            <input type="email" id="email" placeholder="name@gmail.com" required autocomplete="email">
+          </div>
+          <div class="cs-field">
+            <label>Username</label>
+            <input type="text" id="username" placeholder="username" required autocomplete="username">
+          </div>
+        </div>
+
+        <div class="form-col">
+          <div class="cs-field">
+            <label>City / Location</label>
+            <input type="text" placeholder="e.g. Metro Manila, Philippines" required>
+          </div>
+          <div class="cs-field">
+            <label>Password</label>
+            <input type="password" placeholder="********" required autocomplete="new-password">
+          </div>
+        </div>
+      </div>
+
+      <div class="terms-row">
+        <input type="checkbox" id="agree" required>
+        <label for="agree">
+          I agree to the CineSense Multi-Criteria Research and Evaluation Terms. 
+        </label>
+      </div>
+      <br/>
+      <button type="submit" class="btn-primary">Register &amp; Set Preferences</button>
+    </form>
+  </div>
+
+  <script>
+    function handleRegistration(e) {
+      e.preventDefault();
+      localStorage.setItem('cinesense_active_user', document.getElementById('username').value);
+      window.location.href = 'preferences.html';
+    }
+  </script>
+</body>
+</html>

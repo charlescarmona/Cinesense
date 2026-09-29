@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Preferences |  CineSense</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+
+  </style>
+</head>
+<body class="cluster-prompt-body">
+
+  <div class="cluster-modal-container">
+    <div class="custom-cluster-card">
+      <h2 class="cluster-title">Build a Custom Preference Cluster</h2>
+      <p class="cluster-subtitle">Combine the 4 criteria to create a custom target cluster:</p>
+
+      <form id="clusterForm">
+        <div class="cluster-grid">
+          <div class="cluster-field">
+            <label for="clusterGenre">Genre</label>
+            <div class="select-wrapper">
+              <select id="clusterGenre" name="genre">
+                <option value="Drama" selected>Drama</option>
+                <option value="Action">Action</option>
+                <option value="Adventure">Adventure</option>
+                <option value="Animation">Animation</option>
+                <option value="Comedy">Comedy</option>
+                <option value="Crime">Crime</option>
+                <option value="Documentary">Documentary</option>
+                <option value="Family">Family</option>
+                <option value="Fantasy">Fantasy</option>
+                <option value="Mystery">Mystery</option>
+                <option value="Romance">Romance</option>
+                <option value="Sci-Fi">Sci-Fi</option>
+                <option value="Thriller">Thriller</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="cluster-field">
+            <label for="clusterStyle">Style / Form</label>
+            <div class="select-wrapper">
+              <select id="clusterStyle" name="style">
+              <option value="Live-Action">Live-Action</option>
+              <option value="Animation">Animation</option>
+              <option value="Noir / Dark">Noir / Dark</option>
+              <option value="Experimental">Experimental</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="cluster-field">
+            <label for="clusterRating">Age Restriction</label>
+            <div class="select-wrapper">
+              <select id="clusterRating" name="rating">
+                <option value="G">G</option>
+                <option value="PG">PG</option>
+                <option value="PG-13" selected>PG-13</option>
+                <option value="R">R</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="cluster-field">
+            <label for="clusterEra">Era</label>
+            <div class="select-wrapper">
+              <select id="clusterEra" name="era">
+                <option value="Classic | Pre-1980" selected>Classic | Pre-1980</option>
+                <option value="Modern | 1980–1999">Modern | 1980–1999</option>
+                <option value="2000s | 2000–2015">2000s | 2000–2015</option>
+                <option value="Contemporary | 2016–Present">Contemporary | 2016–Present</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="cluster-actions">
+          <button type="button" class="btn-cluster-cancel" id="cancelClusterBtn">Cancel</button>
+          <button type="submit" class="btn-cluster-add">Add Cluster</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const savedCluster = JSON.parse(localStorage.getItem("cineSense_customCluster"));
+      if (savedCluster) {
+        if (savedCluster.genre) document.getElementById("clusterGenre").value = savedCluster.genre;
+        if (savedCluster.style) document.getElementById("clusterStyle").value = savedCluster.style;
+        if (savedCluster.rating) document.getElementById("clusterRating").value = savedCluster.rating;
+        if (savedCluster.era) document.getElementById("clusterEra").value = savedCluster.era;
+      }
+
+      document.getElementById("cancelClusterBtn").addEventListener("click", () => {
+        window.location.href = "dashboard.html";
+      });
+
+      document.getElementById("clusterForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const cluster = {
+          genre: document.getElementById("clusterGenre").value,
+          style: document.getElementById("clusterStyle").value,
+          rating: document.getElementById("clusterRating").value,
+          era: document.getElementById("clusterEra").value
+        };
+
+        localStorage.setItem("cineSense_customCluster", JSON.stringify(cluster));
+        window.location.href = "dashboard.html";
+      });
+    });
+  </script>
+</body>
+</html>
